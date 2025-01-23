@@ -1,6 +1,6 @@
-
+const { hashPassword } = require('../utils/hashPassword.jsx')
 const userModel = require('../models/userModels.jsx')
-const registerController =async (req, res) => {
+const registerController = async (req, res) => {
     try {
         const { name, email, password } = req.body
         //validation performed here
@@ -12,6 +12,15 @@ const registerController =async (req, res) => {
         if (existingUser) {
             return res.status(500).send({ success: false, msg: "User already exists" })
         }
+
+        // hash password
+        const hashedPassword = await hashPassword(password)
+        //save user
+        const user = await userModel({
+            name,
+            email,
+            password: hashedPassword
+        }).save()
         return res.status(201).send({ success: true, msg: "User registered" })
     }
     catch (error) {
