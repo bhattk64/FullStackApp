@@ -21,12 +21,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 //routes
-app.get("/", (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: 'Hello from server'
-    })
-})
+app.use('/api/users', require('./routes/userRoutes.jsx'));
 
 //port
 const PORT = process.env.PORT || 5000;
