@@ -1,21 +1,15 @@
 const express=require('express')
-const { registerController } = require('../controllers/userControllers.jsx')
+const { registerController, loginController } = require('../controllers/userControllers.jsx')
 
 //router object
 const router=express.Router()
 
 //routes
+//register-post
 router.post('./register',registerController)
-router.route('/users/:id').get((req,res)=>{
-    res.send('Get user')
-}
-).put((req,res)=>{
-    res.send('Update user')
-}
-).delete((req,res)=>{
-    res.send('Delete user')
-}
-)
+
+//login -post
+router.post('./login',loginController)
 
 //exports
 module.exports=router
