@@ -1,4 +1,4 @@
-const { hashPassword, comparePassword } = require('../utils/hashPassword.jsx')
+const { hashPassword, comparePassword } = require('../helpers/authHelper.jsx')
 const userModel = require('../models/userModels.jsx')
 const jwt = require('jsonwebtoken')
 const registerController = async (req, res) => {
@@ -43,23 +43,23 @@ const loginController = async (req, res) => {
         if (!user) {
             return res.status(400).send({ success: false, msg: "User does not exist" })
         }
-        
-            //compare password
-            const isMatch = await comparePassword(password, user.password)
-            if (!isMatch) {
-                return res.status(400).send({ success: false, msg: "Invalid credentials" })
-            }
-            //create tokwn jwt
-            const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' })
-            //undefined
-            user.password = undefined
-            return res.status(200).send({ success: true, msg: "User logged in", token, user })
 
-
-
-
+        //compare password
+        const isMatch = await comparePassword(password, user.password)
+        if (!isMatch) {
+            return res.status(400).send({ success: false, msg: "Invalid credentials" })
         }
-    
+        //create tokwn jwt
+        const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' })
+        //undefined
+        user.password = undefined
+        return res.status(200).send({ success: true, msg: "User logged in", token, user })
+
+
+
+
+    }
+
 
     catch (error) {
         console.log(error)

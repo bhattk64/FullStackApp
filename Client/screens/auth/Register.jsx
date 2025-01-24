@@ -2,39 +2,58 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import InputBox from '../../components/Forms/InputBox'
 import SubmitButton from '../../components/Forms/SubmitButton'
+import { Alert } from 'react-native'
+import axios from 'axios'
 
 
 
-
-const Register = () => {
+const Register = ({ navigation }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true)
+      if (!name || !email || !password) {
+        Alert.alert('Please fill all the fields')
+        setLoading(false)
+        return
+      }
+      
+      setLoading(false)
+      const { data } = await axios.post('http://172.16.103.188:8080/api/users/register', {
+        name, email, password
+      })
+      Alert(data && data.message)
+      navigation.navigate('Login')
+      console.log('register, data==>', { name, email, password })
+    }
+    catch (error) {
+      Alert(error.response.data.message)
+      setLoading(false)
+      console.log(error)
+
+    }
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Register</Text>
       <View style={{ marginHorizontal: 20 }}>
         <InputBox title="Name" value={name} setName={setName} />
-        <InputBox title="Email" value={email} setEmail={setEmail} />
-        <InputBox title="Password" value={password} onChange={setPassword} />
+        <InputBox title="Email" keyboardType="email-address" autocomplete="email" value={email} setValue={setEmail} />
+        <InputBox title="Password" secureTextEntry={true} autocomplete="password" value={password} setValue={setPassword} />
       </View>
       {/* <Text>{JSON.stringify({ name, email, password }, null, 4)}</Text> */}
 
       <SubmitButton submitButton="Register"
         loading={loading}
-        handleSubmitButton={() => {
-
-          setLoading(true)
-          setTimeout(() => {
-            setLoading(false)
-          }, 3000)
-
-        }}
+        handleSubmitButton={handleSubmit}
 
       />
-      <Text style={styles.linkText}>Already have an account? Please <Text style={{ color: 'blue', textDecorationLine: 'underline', fontWeight: 'bold', fontSize: 16 }}>LOGIN HERE!!</Text></Text>
+      <Text style={styles.linkText}>Already have an account? Please <Text style={{ color: 'blue', textDecorationLine: 'underline', fontWeight: 'bold', fontSize: 16  } } onPress={() => navigation.navigate('Login') }>LOGIN HERE!!</Text>{' '} </Text>
     </View>
   )
 }

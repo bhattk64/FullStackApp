@@ -2,33 +2,62 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import InputBox from '../../components/Forms/InputBox'
 import SubmitButton from '../../components/Forms/SubmitButton'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
 
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
+    const handleSubmit = async () => {
+        try {
+            setLoading(true)
+            if (!email || !password) {
+                Alert.alert('Please fill all the fields')
+                setLoading(false)
+                return
+            }
+            setLoading(false)
+            const { data } = await axios.post('http://172.16.103.188:8080/api/users/login', {
+                email, password
+            })
+            Alert(data && data.message)
+           await AsyncStorage.setItem('token', data.token)
+            
+            console.log('register, data==>', { email, password })
+        }
+        catch (error) {
+            Alert(error.response.data.message)
+            setLoading(false)
+            console.log(error)
+        }
+
+    }
+
+    //temporary code to chech local storage
+    const localData = async () => {
+        const token = await AsyncStorage.getItem('token')
+        console.log(token)
+    }
+    localData()
+
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Login</Text>
             <View style={{ marginHorizontal: 20 }}>
-                <InputBox title="Email" value={email} setEmail={setEmail} />
-                <InputBox title="Password" value={password} setPassword={setPassword} />
+                <InputBox title="Email" value={email} keyboardType="email-address" autocomplete="email" setValue={setEmail} />
+                <InputBox title="Password" value={password} secureTextEntry autocomplete="password" setValue={setPassword} />
             </View>
             {/* <Text>{JSON.stringify({ name, email, password }, null, 4)}</Text> */}
 
             <SubmitButton submitButton="Login"
                 loading={loading}
-                handleSubmitButton={() => {
-
-                    setLoading(true)
-                    setTimeout(() => {
-                        setLoading(false)
-                    }, 3000)
-
-                }}
+                handleSubmitButton={handleSubmit}
 
             />
             <Text style={styles.linkText}>Don't have an account? Please <Text style={{ color: 'blue', textDecorationLine: 'underline', fontWeight: 'bold', fontSize: 16 }}
