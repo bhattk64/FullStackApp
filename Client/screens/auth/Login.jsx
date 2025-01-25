@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { AuthContext } from '../../context/authContext'
 import InputBox from '../../components/Forms/InputBox'
 import SubmitButton from '../../components/Forms/SubmitButton'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -7,6 +8,8 @@ import axios from 'axios'
 
 
 const Login = ({ navigation }) => {
+    //global state
+    const { state, setState } = useContext(AuthContext)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -21,12 +24,13 @@ const Login = ({ navigation }) => {
                 return
             }
             setLoading(false)
-            const { data } = await axios.post('http://172.16.103.188:8080/api/users/login', {
+            const { data } = await axios.post('/users/login', {
                 email, password
             })
-            Alert(data && data.message)
+            setState(data)
            await AsyncStorage.setItem('token', data.token)
-            
+           Alert(data && data.message)
+            navigation.navigate('Home')
             console.log('register, data==>', { email, password })
         }
         catch (error) {

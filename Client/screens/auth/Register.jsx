@@ -23,7 +23,7 @@ const Register = ({ navigation }) => {
       }
       
       setLoading(false)
-      const { data } = await axios.post('http://172.16.103.188:8080/api/users/register', {
+      const { data } = await axios.post('/users/register', {
         name, email, password
       })
       Alert(data && data.message)
