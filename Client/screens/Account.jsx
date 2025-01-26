@@ -1,21 +1,28 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useContext } from 'react'
-import { AuthContext } from '../context/authContext'
+import React from 'react'
 import FooterMenus from '../components/Forms/Menus/FooterMenus'
+import { AuthContext } from '../context/authContext'
+import { useContext } from 'react'
 
-const Home = () => {
-    //global state
+
+const Account = () => {
     const [state] = useContext(AuthContext)
-    return (  
+    return (
         <View style={styles.container}>
+
+           <View style={{flex: 1,justifyContent: 'flex-end'}}>
+            <Text>Name:{state?.user.name}</Text>
+            <Text>Email:{state?.user.email}</Text>
+            <Text>Phone:{state?.user.phone}</Text>
+            
+           <FooterMenus />
+           </View>
            
-            <Text>{JSON.stringify(state, null, 4)}</Text>
-            <FooterMenus />
         </View>
     )
 }
 
-export default Home
+export default Account
 
 const styles = StyleSheet.create({
     container: {
@@ -25,6 +32,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 20,
         marginTop: 50
-
     }
 })

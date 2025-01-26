@@ -1,21 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useContext } from 'react'
-import { AuthContext } from '../context/authContext'
+import React from 'react'
 import FooterMenus from '../components/Forms/Menus/FooterMenus'
 
-const Home = () => {
-    //global state
-    const [state] = useContext(AuthContext)
-    return (  
+
+const Post = () => {
+
+    return (
         <View style={styles.container}>
-           
-            <Text>{JSON.stringify(state, null, 4)}</Text>
-            <FooterMenus />
+
+            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                <FooterMenus />
+            </View>
+
         </View>
     )
 }
 
-export default Home
+export default Post
 
 const styles = StyleSheet.create({
     container: {
@@ -25,6 +26,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 20,
         marginTop: 50
-
     }
 })
