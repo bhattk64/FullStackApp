@@ -66,4 +66,37 @@ const loginController = async (req, res) => {
         return res.status(500).send({ success: false, msg: "Server error", error })
     }
 }
-module.exports = { registerController, loginController }
+
+//update user
+const updateUser = async (req, res) => {
+    try {
+        const { name, email, password } = req.body
+        //user find
+        const user = await userModel.findOne({email})
+         //validation     
+        if (!name && !email && !password) {
+            return res.status(400).send({ success: false, msg: "Please enter all fields" }) 
+
+            
+        }
+        
+        //hash password
+        const hashedPassword = password? await hashPassword(password):undefined
+        //update user
+        const updatedUser = await userModel.findOneAndUpdate(
+            { email },
+            { name: name || user.name, email: email || user.email, password: hashedPassword || user.password },
+            { new: true }
+        )
+        updateUser.password = undefined
+        return res.status(200).send({ success: true, msg: "User updated", updatedUser })
+        
+    }
+    catch (error) {
+        console.log(error)
+        return res.status(500).send({ success: false, msg: "Server error", error })
+    }
+}
+
+
+module.exports = { registerController, loginController, updateUser }
