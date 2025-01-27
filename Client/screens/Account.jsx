@@ -1,9 +1,9 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View,ScrollView } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View,ScrollView ,Image} from 'react-native'
 import React from 'react'
 import FooterMenus from '../components/Forms/Menus/FooterMenus'
 import { AuthContext } from '../context/authContext'
 import { useContext,useState } from 'react'
-import { Image } from 'react-native-reanimated/lib/typescript/Animated'
+
 import { TextInput } from 'react-native-gesture-handler'
 import axios from 'axios'
 
@@ -74,7 +74,7 @@ const Account = () => {
                 <Text style={styles.inputText}>Password</Text>
                 <TextInput style={styles.inputBox} 
                 onChangeText={(text)=>setPassword(text)}
-                value={password} placeholder='Password' secureTextEntry:true />
+                value={password} placeholder='Password' />
             </View>
             <View style={{alignItems:'center'}}>
                 <TouchableOpacity style={styles.updateBtn} onPress={handleUpdate}>
