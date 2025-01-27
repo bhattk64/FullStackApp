@@ -7,7 +7,7 @@ const AuthContext = createContext();
 //provider
 const AuthProvider = ({ children }) => {
     //global state
-    const [state, setState] = useState({ user: null, token: "" })
+    const [state, setState] = useState({ user: null, token: "",loading:true });
 
       //default axios setting
     axios.defaults.baseURL = 'http://172.16.103.188:8080/api'

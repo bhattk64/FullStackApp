@@ -12,6 +12,7 @@ const InputBox = ({ title, value, onChange}) => {
                 secureTextEntry={title === 'Password' }
                 value={value}
                 onChangeText={onChange}
+                placeholder={`Enter ${title}`}
 
 
             />

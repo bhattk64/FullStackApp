@@ -3,7 +3,7 @@ import React from 'react'
 
 const SubmitButton = ({handleSubmitButton, submitButton,loading}) => {
   return (
-  <TouchableOpacity style={styles.submitButton} onPress={handleSubmitButton}>
+  <TouchableOpacity style={styles.submitButton}  onPress={handleSubmitButton}>
     <Text style={styles.button}>
         {loading ? 'Loading...Please Wait' : submitButton}
         </Text>

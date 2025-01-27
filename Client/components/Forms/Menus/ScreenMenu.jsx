@@ -1,22 +1,24 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Home from '../../../screens/Home'
-import Register from '../../../screens/auth/Register'
-import Login from '../../../screens/auth/Login'
-import { AuthContext } from '../../../context/authContext'
-import HeaderMenu from './HeaderMenu'
-import Post from '../../../screens/Post'
-import About from '../../../screens/About'
-import Account from '../../../screens/Account'
+import Home from '../../../screens/Home.jsx'
+import Register from '../../../screens/auth/Register.jsx'
+import Login from '../../../screens/auth/Login.jsx'
+import { AuthContext } from '../../../context/authContext.jsx'
+import HeaderMenu from './HeaderMenu.jsx'
+import Post from '../../../screens/Post.jsx'
+import About from '../../../screens/About.jsx'
+import Account from '../../../screens/Account.jsx'
 
-//global state
-const [state] = useContext(AuthContext)
-//auth condition variable
-const authCondition = state?.user && state?.token
+
+
 
 const Stack = createNativeStackNavigator()
 const ScreenMenu = () => {
+    //global state
+    const [state] = useContext(AuthContext)
+    //auth condition variable
+    const authCondition = state?.user && state?.token
     return (
 
 
