@@ -1,5 +1,5 @@
 const express=require('express')
-const { registerController, loginController, updateUser } = require('../controllers/userControllers.jsx')
+const { registerController, loginController, updateUser, requireSignin } = require('../controllers/userControllers.jsx')
 
 //router object
 const router=express.Router()
@@ -12,7 +12,7 @@ router.post('./register',registerController)
 router.post('./login',loginController)
 
 // update  -put
-router.put('./update',updateUser) 
+router.put('./update',requireSignin,  updateUser) 
 
 //exports
 module.exports=router
