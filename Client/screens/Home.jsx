@@ -2,19 +2,25 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/authContext.jsx';
 import FooterMenus from '../components/Forms/Menus/FooterMenus.jsx';
+import { postContext } from '../context/postContext.jsx';
+import { ScrollView } from 'react-native-gesture-handler';
+import PostCard from '../components/Forms/postCard.jsx';
 
 const Home = () => {
-    const [state] = useContext(AuthContext);
+
+    const [posts] = useContext(postContext);
 
     return (
         <View style={styles.container}>
-            <View style={styles.content}>
-                <Text style={styles.title}>Welcome, {state?.user?.name || 'Guest'}!</Text>
-                <Text style={styles.description}>
-                    You are logged in with the email: {state?.user?.email}
-                </Text>
+            <ScrollView>
+                <PostCard posts={posts} />
+
+                {/* <Text> {json.stringify(posts, null, 2)}  </Text> */}
+            </ScrollView>
+            <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+                <FooterMenus />
             </View>
-            <FooterMenus />
+
         </View>
     );
 };

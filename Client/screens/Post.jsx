@@ -4,10 +4,15 @@ import FooterMenus from '../components/Forms/Menus/FooterMenus.jsx';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import Fontawesome from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios'; 
+import { useState,useContext } from 'react';
+import { postContext } from '../context/postContext.jsx';
 
 
 
 const Post = ({ navigation }) => {
+    //global state
+    const [posts,setPosts] = useContext(postContext);
+    //local state
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
@@ -25,6 +30,7 @@ const Post = ({ navigation }) => {
                 description
             })
             setLoading(false);
+           setPosts([...posts, data?.post]);
             Alert.alert('Success', 'Post created successfully');
             setTitle('');
             setDescription('');

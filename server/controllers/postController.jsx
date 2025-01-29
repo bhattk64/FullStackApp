@@ -13,4 +13,22 @@ const createPostController = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
-module.exports = { createPostController };
+
+// get all post
+const getAllPostController = async (req, res) => {
+    try {
+        const posts = await postModel.find()
+        .populate('postedBy', '_id name')
+        .sort({ createdAt: -1 });
+        
+        res.status(200).send({ status: 'success', posts, count: posts.length, message: 'All posts' });
+         
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message , error});
+        
+
+
+    }
+}
+module.exports = { createPostController, getAllPostController };
