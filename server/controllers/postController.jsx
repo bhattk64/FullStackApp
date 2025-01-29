@@ -18,17 +18,31 @@ const createPostController = async (req, res) => {
 const getAllPostController = async (req, res) => {
     try {
         const posts = await postModel.find()
-        .populate('postedBy', '_id name')
-        .sort({ createdAt: -1 });
-        
+            .populate('postedBy', '_id name')
+            .sort({ createdAt: -1 });
+
         res.status(200).send({ status: 'success', posts, count: posts.length, message: 'All posts' });
-         
+
     }
     catch (error) {
-        res.status(500).json({ message: error.message , error});
-        
+        res.status(500).json({ message: error.message, error });
+
 
 
     }
 }
-module.exports = { createPostController, getAllPostController };
+//get user posts
+const getUserPostController = async (req, res) => {
+    try {
+        const posts = await postModel.find({ postedBy: req.user._id })
+            .populate('postedBy/user', '_id name')
+            .sort({ createdAt: -1 });
+        res.status(200).send({ status: 'success', posts, count: posts.length, message: 'User posts' });
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message, error });
+        console.log(error);
+    }
+
+}
+module.exports = { createPostController, getAllPostController, getUserPostController };

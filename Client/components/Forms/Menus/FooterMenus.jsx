@@ -18,10 +18,10 @@ const FooterMenus = () => {
                 <Text>Home</Text>
             </TouchableOpacity>
             <FontAwesome5 name="search" style={styles.iconStyle} />
-            <TouchableOpacity onPress={() => navigation.navigate('Post')}>
+            <TouchableOpacity onPress={() => navigation.navigate('MyPosts')}>
                 <FontAwesome5 name="plus" style={styles.iconStyle}
-                    color={route.name === 'Post' ? 'red' : 'white'} />
-                <Text>Post</Text>
+                    color={route.name === 'MyPostss' ? 'red' : 'white'} />
+                <Text>My Posts</Text>
             </TouchableOpacity >
             <TouchableOpacity onPress={() => navigation.navigate('Account')}>
                 <FontAwesome5 name="user" style={styles.iconStyle}

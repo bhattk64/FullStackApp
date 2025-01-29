@@ -9,6 +9,7 @@ import HeaderMenu from './HeaderMenu.jsx'
 import Post from '../../../screens/Post.jsx'
 import About from '../../../screens/About.jsx'
 import Account from '../../../screens/Account.jsx'
+import MyPost from '../../../screens/MyPost.jsx'
 
 
 
@@ -31,7 +32,7 @@ const ScreenMenu = () => {
                 <Stack.Screen name="About" component={About}
                     options={{ headerBackTitle: 'Back', headerRight: () => <HeaderMenu /> }} />
 
-                <Stack.Screen name="Account" component={Account}
+                <Stack.Screen name="MyPosts" component={MyPost}
                     options={{ headerBackTitle: 'Back', headerRight: () => <HeaderMenu /> }} />
 
 

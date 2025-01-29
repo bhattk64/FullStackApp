@@ -8,10 +8,15 @@ const PostCard = ({ posts }) => {
             {posts?.map((post, index) => (
                 <View style={styles.card} key={index}>
                     <Text style={styles.heading}>{post?.title}</Text>
-                    <Text style{{ marginTop: 10 }}>{post?.description}</Text>
+                    <Text style={{ marginTop: 10 }}>{post?.description}</Text>
                     <View style={styles.footer}>
+                        {post?.postedBy?.name &&(
+                            
+                      
                         <Text >{post?.postedBy?.name}</Text>
+                    )}
                         <Text >{post?.createdAt}</Text>
+                    
                     </View>
                 </View>
 
