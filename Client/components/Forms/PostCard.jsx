@@ -44,10 +44,10 @@ const PostCard = ({ posts, myPostScreen }) => {
 
         <View>
             <Text style={styles.heading}>Total Posts {posts?.length}</Text>
-            {myPostScreen && <EditModal 
-            modalVisible={modalVisible} 
-            setModalVisible={setModalVisible}
-            posts={posts}
+            {myPostScreen && <EditModal
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+                posts={posts}
             />}
             {posts?.map((post, index) => (
                 <View style={styles.card} key={index}>

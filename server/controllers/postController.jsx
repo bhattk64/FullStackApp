@@ -57,4 +57,20 @@ const deletePostController = async (req, res) => {
 
     }
 }
-module.exports = { createPostController, getAllPostController, getUserPostController, deletePostController };
+const updatePostController = async (req, res) => {
+    try{
+        const { title, description } = req.body;
+        const { id } = req.params;
+       
+        await postModel.findByIdAndUpdate({ _id: id }, { title, description });
+        if (!title) return res.status(400).json({ message: 'Title is required' });
+        if (!description) return res.status(400).json({ message: 'Description is required' });
+
+        res.status(200).send({ status: 'success', message: 'Post updated', post });
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message, error });
+
+    }
+}
+module.exports = { createPostController, getAllPostController, getUserPostController, deletePostController, updatePostController };
