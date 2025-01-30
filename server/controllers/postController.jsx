@@ -45,4 +45,16 @@ const getUserPostController = async (req, res) => {
     }
 
 }
-module.exports = { createPostController, getAllPostController, getUserPostController };
+//delete post
+const deletePostController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await postModel.findByIdAndDelete({ _id: id });
+        res.status(200).send({ status: 'success', message: 'Post deleted' });
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message, error });
+
+    }
+}
+module.exports = { createPostController, getAllPostController, getUserPostController, deletePostController };

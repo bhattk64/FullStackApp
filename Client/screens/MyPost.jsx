@@ -25,13 +25,15 @@ const MyPost = () => {
            console.log(error); 
    }
 
+   }
+
    useEffect(() => {
        getUserPostController();
    }, [])
   return (
     <View style={styles.container}>
         <ScrollView>
-          <PostCard posts={post} />
+          <PostCard posts={post}  myPostScreen={true}/>
 
         </ScrollView>
         <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
