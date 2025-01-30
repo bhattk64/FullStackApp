@@ -3,11 +3,14 @@ import React, { useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import EditModal from './EditModal.jsx';
 
 const PostCard = ({ posts, myPostScreen }) => {
-    const[loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
+    const [posts, setPosts] = useState({})
     const navigation = useNavigation()
-    const handleDelete = () => {
+    const handleDelete = (id) => {
         Alert.alert('Delete Post', 'Are you sure you want to delete this post?', [
             {
                 text: 'Cancel',
@@ -24,29 +27,37 @@ const PostCard = ({ posts, myPostScreen }) => {
     const deletePostController = async (id) => {
         try {
             setLoading(true);
-            const {data}= await axios.delete(`/post/delete/${id}`);
+            const { data } = await axios.delete(`/post/delete/${id}`);
             setLoading(false);
             Alert.alert('Success', 'Post deleted successfully');
             navigation.navigate('Home');
-            
+
         }
         catch (error) {
             setLoading(false);
             res.status(500).send({ message: error.message, error });
         }
     }
-    
+
     return (
         //delete prompt
-       
+
         <View>
             <Text style={styles.heading}>Total Posts {posts?.length}</Text>
+            {myPostScreen && <EditModal 
+            modalVisible={modalVisible} 
+            setModalVisible={setModalVisible}
+            posts={posts}
+            />}
             {posts?.map((post, index) => (
                 <View style={styles.card} key={index}>
                     {myPostScreen && (
-                        <View>
-                            <Text style={{ textAlign: 'right' }}>
-                                <FontAwesome name="trash" color="black"  onPress={()=> handleDelete(post?._id)}/>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                            <Text style={{ marginHorizontal: 10 }}>
+                                <FontAwesome name="pen" color="darkblue" onPress={() => { setPosts(post), setModalVisible(true) }} />
+                            </Text>
+                            <Text>
+                                <FontAwesome name="trash" color="black" onPress={() => handleDelete(post?._id)} />
                             </Text>
                         </View>
                     )}
