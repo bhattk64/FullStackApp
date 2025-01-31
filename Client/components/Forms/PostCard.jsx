@@ -30,7 +30,7 @@ const PostCard = ({ posts, myPostScreen }) => {
             const { data } = await axios.delete(`/post/delete/${id}`);
             setLoading(false);
             Alert.alert('Success', 'Post deleted successfully');
-            navigation.navigate('Home');
+            navigation.push('MyPost');
 
         }
         catch (error) {

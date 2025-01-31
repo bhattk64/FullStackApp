@@ -30,7 +30,7 @@ const PostProvider = ({ children }) => {
     }, []);
 
     return (
-        <postContext.Provider value={{ posts, setPosts }}>   {children}
+    <postContext.Provider value={[ posts, setPosts ,getPosts]}>   {children}
         </postContext.Provider>
     );
 }

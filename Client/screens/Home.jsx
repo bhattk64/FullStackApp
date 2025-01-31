@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, RefreshControl } from 'react-native';
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/authContext.jsx';
 import FooterMenus from '../components/Forms/Menus/FooterMenus.jsx';
@@ -8,11 +8,20 @@ import PostCard from '../components/Forms/postCard.jsx';
 
 const Home = () => {
 
-    const [posts] = useContext(postContext);
+    const [posts, setPosts] = useContext(postContext);
+    const [refreshing, setRefreshing] = React.useState(false);
+    //refresh control
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setPosts([]);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
 
     return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} >
                 <PostCard posts={posts} />
 
                 {/* <Text> {json.stringify(posts, null, 2)}  </Text> */}

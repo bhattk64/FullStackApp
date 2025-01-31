@@ -24,7 +24,7 @@ const EditModal = ({ modalVisible, setModalVisible, posts }) => {
             })
             setLoading(false);
             Alert.alert('Success', 'Post updated successfully');
-            navigation.navigate('Home');
+            navigation.push('MyPost');
         } catch (error) {
             setLoading(false);
             console.error(error);

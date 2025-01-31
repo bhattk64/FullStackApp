@@ -32,7 +32,7 @@ const ScreenMenu = () => {
                 <Stack.Screen name="About" component={About}
                     options={{ headerBackTitle: 'Back', headerRight: () => <HeaderMenu /> }} />
 
-                <Stack.Screen name="MyPosts" component={MyPost}
+                <Stack.Screen name="MyPost" component={MyPost}
                     options={{ headerBackTitle: 'Back', headerRight: () => <HeaderMenu /> }} />
 
 
