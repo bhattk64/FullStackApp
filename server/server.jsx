@@ -26,6 +26,14 @@ app.use(morgan('dev'));
 app.use('/api/users', require('./routes/userRoutes.jsx'));
 app.use('/api/posts', require('./routes/postRoutes.jsx'));
 
+//home
+app.get('/', (req, res) => {
+    res.status(200).send({
+        message: 'Welcome to the home page'
+        
+    });
+})
+
 //port
 const PORT = process.env.PORT || 5000;
 
